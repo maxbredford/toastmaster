@@ -133,6 +133,7 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
 
   /* closing */
   .skal{font-family:var(--serif);font-size:clamp(60px,12vw,150px);line-height:1;color:var(--sage-deep)}
+  .skal--wide{font-size:clamp(44px,9.5vw,118px);letter-spacing:.01em}
 
   /* chrome */
   .hud{position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;
@@ -142,12 +143,6 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   .hint{position:fixed;right:20px;bottom:16px;font-family:var(--sans);font-size:12px;
     letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);opacity:.5;pointer-events:none}
 
-  .notes{position:fixed;left:0;right:0;bottom:0;background:rgba(46,42,36,.94);color:#F4EFE4;
-    font-family:var(--sans);font-size:clamp(14px,1.5vw,18px);line-height:1.5;
-    padding:16px 22px;transform:translateY(102%);transition:transform .35s ease;z-index:20}
-  .notes.show{transform:none}
-  .notes b{color:var(--gold-soft);font-weight:700;letter-spacing:.06em}
-
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.001ms!important;animation:none!important}
   }
@@ -156,15 +151,22 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
 <body>
 <div class="stage">
 
-  <!-- 0: TITLE -->
-  <section class="slide" data-notes="Res dig, fånga rummet, låt tystnaden lägga sig. &quot;Innan maten en snabb liten undersökning. Jag mailade faktiskt er alla några frågor i förväg&hellip;&quot;">
+  <!-- 0: FÖRSÄTTSSIDA -->
+  <section class="slide">
+    <div class="eyebrow">Toastmaster Max</div>
+    <div class="skal skal--wide">Välkomna</div>
+    <div class="sub">Till PH &amp; Annas bröllopsmiddag</div>
+  </section>
+
+  <!-- 1: TITLE -->
+  <section class="slide">
     <div class="eyebrow">Toastmaster Max</div>
     <h1>En liten <em>opinions&shy;undersökning</em></h1>
     <div class="sub">Tre frågor. 42 svar. Fullständigt vetenskapligt.</div>
   </section>
 
   <!-- 1: FRÅGA 1 -->
-  <section class="slide" data-notes="&quot;Fråga ett: hur många år tills PH:s byggprojekt är klara?&quot; Läs av staplarna. <b>Vänta in reveal:</b> &quot;&hellip;men vänta, det här summerar inte till 42 gäster. Ett alternativ saknas.&quot; (klick)">
+  <section class="slide">
     <div class="eyebrow">Fråga 1 av 3</div>
     <h1>När är PH:s <em>byggprojekt</em> färdiga?</h1>
     <div class="chart">
@@ -186,7 +188,7 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   </section>
 
   <!-- 2: FRÅGA 2 -->
-  <section class="slide" data-notes="&quot;Fråga två: hur många ombyten hinner Anna med under kvällen?&quot; Läs av. <b>Samma poäng:</b> &quot;&hellip;igen fattas det folk. Vad svarade de?&quot; (klick)">
+  <section class="slide">
     <div class="eyebrow">Fråga 2 av 3</div>
     <h1>Hur många <em>ombyten</em> gör Anna ikväll?</h1>
     <div class="chart">
@@ -208,7 +210,7 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   </section>
 
   <!-- 3: FRÅGA 3 -->
-  <section class="slide" data-notes="&quot;Sista frågan. Aldrig… oändligt… och nu det viktigaste:&quot; Läs frågan, håll en paus. (klick) &quot;För evigt. 100 %. Samtliga gäster är eniga.&quot; Höj glaset här.">
+  <section class="slide">
     <div class="eyebrow">Fråga 3 av 3</div>
     <h1>Hur länge håller <em>kärleken</em> mellan PH och Anna?</h1>
     <div class="chart">
@@ -224,7 +226,7 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   </section>
 
   <!-- 4: SKÅL -->
-  <section class="slide" data-notes="Hälsa gästerna varmt välkomna till middagen. Led första skålen: &quot;Höj era glas — för PH och Anna!&quot;">
+  <section class="slide">
     <div class="eyebrow">Varmt välkomna</div>
     <div class="skal">Skål!</div>
     <div class="sub">För PH &amp; Anna — för evigt.</div>
@@ -233,14 +235,13 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
 </div>
 
 <div class="hud" id="dots"></div>
-<div class="hint">← →  ·  N = manus  ·  F = helskärm</div>
-<div class="notes" id="notes"></div>
+<div class="hint">← →  ·  F = helskärm</div>
 
 <script>
 (function(){
   const slides=[...document.querySelectorAll('.slide')];
-  // reveal-nivåer per slide: title=1, Q1=3, Q2=3, Q3=2, skål=1
-  const revealsPer=[1,3,3,2,1];
+  // reveal-nivåer per slide: försättssida=1, title=1, Q1=3, Q2=3, Q3=2, skål=1
+  const revealsPer=[1,1,3,3,2,1];
   const flat=[];
   revealsPer.forEach((n,s)=>{for(let r=0;r<n;r++)flat.push({s,r});});
   let i=0;
@@ -249,9 +250,6 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   const dots=document.getElementById('dots');
   slides.forEach(()=>{const d=document.createElement('div');d.className='dot';dots.appendChild(d);});
   const dotEls=[...dots.children];
-
-  const notesBox=document.getElementById('notes');
-  let notesOn=false;
 
   function heightPct(col,plot){
     const max=+plot.dataset.max;
@@ -280,7 +278,6 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
       }
     });
     dotEls.forEach((d,idx)=>d.classList.toggle('on',idx===s));
-    notesBox.innerHTML=slides[s].dataset.notes||'';
   }
 
   function next(){ if(i<flat.length-1){i++;render();} }
@@ -294,7 +291,6 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
         e.preventDefault();prev();break;
       case 'Home':e.preventDefault();i=0;render();break;
       case 'End':e.preventDefault();i=flat.length-1;render();break;
-      case 'n':case 'N':notesOn=!notesOn;notesBox.classList.toggle('show',notesOn);break;
       case 'f':case 'F':
         if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
         else document.exitFullscreen?.();
@@ -303,7 +299,6 @@ src:url(data:font/woff2;base64,d09GMgABAAAAAE2UABUAAAAAiJAAAE0fAAIBBgAAAAAAAAAAA
   });
   // klick/tap = nästa (höger halva), vänster halva = föregående
   document.addEventListener('click',e=>{
-    if(e.target.closest('#notes'))return;
     (e.clientX < innerWidth*0.28 ? prev : next)();
   });
 
